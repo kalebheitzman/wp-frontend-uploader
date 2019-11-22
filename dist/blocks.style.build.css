@@ -4,28 +4,87 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+/*
+ * media query mixins
+ * Components is designed to be a mobile first framework. It's recommended
+ * to develop your mobile site first, and then work your way up in each
+ * component using the following sass mixins.
+ */
 /**
  * #.# Styles
  *
  * CSS for both Frontend+Backend.
  */
+.wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.hide,
+.wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit.hide {
+  display: none; }
+
 .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader {
-  background: #ddd;
+  background: #e0e0e0;
   margin: 2rem 0;
   padding: 2rem;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
-  border-radius: 3px;
   height: 55vh;
   cursor: pointer; }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.highlight {
+    border: 2px dashed #bbb;
+    background: #ccc; }
   .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form {
     background: #fff;
     width: 400px;
-    padding: 2rem 1rem;
-    text-align: center; }
-    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form i {
-      font-size: 3rem; }
+    padding: 2rem 1rem; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon {
+      text-align: center; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon i {
+        font-size: 3rem; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form p {
+      text-align: center; }
+
+.wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 2rem 0; }
+  @media (min-width: 600px) {
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit {
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 2rem; } }
+  @media (min-width: 900px) {
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit {
+      grid-template-columns: 1fr 1fr 1fr; } }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-wrapper {
+    height: 220px;
+    width: 100%;
+    background: #ccc;
+    padding: 1rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-wrapper img {
+      max-height: 100%;
+      width: auto; }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form {
+    padding: 1rem;
+    background: #fff;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form textarea,
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }

@@ -4,6 +4,12 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+/*
+ * media query mixins
+ * Components is designed to be a mobile first framework. It's recommended
+ * to develop your mobile site first, and then work your way up in each
+ * component using the following sass mixins.
+ */
 /**
  * #.# Editor Styles
  *

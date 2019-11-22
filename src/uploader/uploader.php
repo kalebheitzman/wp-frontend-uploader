@@ -37,15 +37,18 @@ function wp_frontend_uploader_scripts() {
 
 		// get attributes to localize.
 		$attributes = $block['attrs'];
-		$js_attributes = array(
+		$js_vars = array(
+			'endpoint'   => esc_url_raw( rest_url( '/wp/v2/media/' ) ),
+			'nonce'      => wp_create_nonce( 'wp_rest' ),
 			'attributes' => $attributes,
+			'files'      => []
 		);
 
 		// localize needed vars to script
 		wp_localize_script(
 			'wp-frontend-uploader-js',
 			'wpFrontendUploader',
-			$js_attributes
+			$js_vars
 		);
 
 		// enqueue the media grid script
@@ -69,10 +72,12 @@ function wp_frontend_uploader_block( $attributes ) {
 	$output = '';
 	ob_start(); ?>
 		<div class="<?php echo $attributes['className']; ?>">
-			<div id="wp-frontend-uploader">
 
+			<div id="wp-frontend-uploader">
 				<form>
-					<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+					<div class="icon">
+						<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+					</div>
 					<p>Drop files here or click to upload.</p>
 					<input
 						type="file"
@@ -83,8 +88,12 @@ function wp_frontend_uploader_block( $attributes ) {
 					/>
 					<label class="button" for="fileElem">Select some files</label>
 				</form>
+			</div><!--#wp-frontend-uploader-->
 
-			</div>
+			<div id="wp-frontend-uploader-edit" class="hide">
+
+			</div><!--#wp-frontend-uploader-edit-->
+
 		</div>
 	<?php
 
