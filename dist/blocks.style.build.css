@@ -9,3 +9,23 @@
  *
  * CSS for both Frontend+Backend.
  */
+.wp-block-kh-wp-frontend-uploader #wp-frontend-uploader {
+  background: #ddd;
+  margin: 2rem 0;
+  padding: 2rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  border-radius: 3px;
+  height: 55vh;
+  cursor: pointer; }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form {
+    background: #fff;
+    width: 400px;
+    padding: 2rem 1rem;
+    text-align: center; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form i {
+      font-size: 3rem; }

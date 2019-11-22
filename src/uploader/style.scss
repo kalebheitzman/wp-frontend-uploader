@@ -4,6 +4,28 @@
  * CSS for both Frontend+Backend.
  */
 
-.wp-block-cgb-block-wp-frontend-uploader  {
+.wp-block-kh-wp-frontend-uploader  {
 
+	#wp-frontend-uploader {
+		background: #ddd;
+		margin: 2rem 0;
+		padding: 2rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 3px;
+		height: 55vh;
+		cursor: pointer;
+
+		form {
+			background: #fff;
+			width: 400px;
+			padding: 2rem 1rem;
+			text-align: center;
+
+			i {
+				font-size: 3rem;
+			}
+		}
+	}
 }

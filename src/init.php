@@ -14,6 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Register Server Side Block Renders
+ */
+$plugin_path = plugin_dir_path( dirname( __FILE__ ) );
+require_once $plugin_path . 'src/uploader/uploader.php';
+
+/**
  * Enqueue Gutenberg block assets for both frontend + backend.
  *
  * Assets enqueued:

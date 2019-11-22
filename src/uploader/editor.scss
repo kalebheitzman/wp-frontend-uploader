@@ -5,6 +5,18 @@
  * which makes it higher in priority.
  */
 
-.wp-block-uploader  {
+.wp-block-kh-wp-frontend-uploader  {
+	background: #efefef;
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 30vh;
 
+	h2 {
+		font-family: sans-serif;
+		color: #aaa !important;
+		text-transform: uppercase;
+		font-size: 1.25rem !important;
+	}
 }

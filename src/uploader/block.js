@@ -6,7 +6,7 @@
  */
 
 // Import Components
-import UploaderEdit from './uploader'
+import UploaderEdit from './edit'
 
 // Import CSS.
 import './editor.scss';

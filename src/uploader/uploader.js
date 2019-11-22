@@ -1,53 +1,19 @@
-const { __ } = wp.i18n; // Import __() from wp.i18n
+/**
+ * WP Frontend Uploader
+ *
+ * @package WPFrontendUploader
+ * @author Kaleb Heitzman
+ * @since 1.0.0
+ */
+(function() {
 
-const {
-	InspectorControls
-} = wp.blockEditor;
+	// get the drop area
+	let dropArea = document.getElementById('wp-frontend-uploader');
 
-const {
-	Panel, PanelBody, PanelRow,
-	SelectControl,
-	TextControl,
-	ToggleControl,
-	Spinner
-} = wp.components;
+	// attach listeners
+	dropArea.addEventListener('dragenter', handlerFunction, false);
+	dropArea.addEventListener('dragleave', handlerFunction, false);
+	dropArea.addEventListener('dragover', handlerFunction, false);
+	dropArea.addEventListener('drop', handlerFunction, false);
 
-const {
-	Fragment,
-} = wp.element;
-
-const {
-	withSelect
-} = wp.data;
-
-const UploaderEdit = withSelect((select, { attributes }) => {
-
-	return {
-
-	}
-})(({ attributes, className, isSelected, setAttributes }) => {
-
-	return(
-		<Fragment>
-
-			{ isSelected && (
-				<InspectorControls>
-					<PanelBody
-						title="Uploader Settings"
-						icon="admin-settings"
-						initialOpen={ true }
-					>
-
-					</PanelBody>
-				</InspectorControls>
-			)}
-
-			<div className={className}>
-				<h2>Uploader</h2>
-
-			</div>
-		</Fragment>
-	)
-})
-
-export default UploaderEdit
+})();
