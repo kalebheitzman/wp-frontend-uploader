@@ -10,12 +10,52 @@
 	// get the drop area
 	let dropArea = document.getElementById('wp-frontend-uploader');
 	let editArea = document.getElementById('wp-frontend-uploader-edit');
+	let progressBar = document.querySelector(`[data-element="progress-bar"]`);
+	let progressStatus = document.querySelector(`[data-element="progress-status"]`);
+	let submitButton = document.querySelector(`[data-element="submit-button"]`);
+
+	// process data
+	let processMediaItems = () => {
+		console.log(wpFrontendUploader.media)
+	}
+	submitButton.addEventListener('click', processMediaItems);
 
 	// prevent defaults on drag and drop
 	let preventDefaults = (e) => {
 		e.preventDefault()
 		e.stopPropagation()
 	};
+
+	// update progress bar
+	updateProgressBar = () => {
+
+		// get media state
+		let media = wpFrontendUploader.media;
+		let totalParts = media.length*3
+
+		let totalUploads = 0
+		let totalTitles = 0
+		let totalCaptions = 0
+		media.forEach(item => {
+			totalUploads = !item.upload ? totalUploads : totalUploads+1;
+			totalTitles = !item.data.title ? totalTitles : totalTitles+1;
+			totalCaptions = !item.data.caption ? totalCaptions : totalCaptions+1;
+		});
+
+		// get the progress
+		let total = totalUploads+totalTitles+totalCaptions;
+		let progress = Math.round( (total/totalParts)*100 );
+		wpFrontendUploader.progress = progress;
+
+		// update the progressbar
+		progressBar.style = `width: ${wpFrontendUploader.progress}%`;
+		progressStatus.innerHTML = `${wpFrontendUploader.progress}%`
+
+		// enable submit button
+		if (wpFrontendUploader.progress === 100) {
+			submitButton.disabled = false;
+		}
+	}
 
 	// add highlight class
 	let highlight = (e) => {
@@ -70,17 +110,41 @@
 			let titleInput = document.createElement('input');
 			titleInput.type = 'text';
 			titleInput.placeholder = 'Title';
+			titleInput.addEventListener('keyup', e => {
+				if (e.target.value.length > 3) {
+					wpFrontendUploader.media[media.key].data.title = e.target.value;
+				} else {
+					wpFrontendUploader.media[media.key].data.title = null;
+				}
+				updateProgressBar();
+			});
 			mediaForm.appendChild(titleInput);
 
 			// photo credit input
 			let creditInput = document.createElement('input');
 			creditInput.type = 'text';
 			creditInput.placeholder = 'Photo Credit';
+			creditInput.addEventListener('keyup', e => {
+				if (e.target.value.length > 3) {
+					wpFrontendUploader.media[media.key].data.credit = e.target.value;
+				} else {
+					wpFrontendUploader.media[media.key].data.credit = null;
+				}
+				updateProgressBar();
+			});
 			mediaForm.appendChild(creditInput);
 
 			// photo credit input
 			let captionText = document.createElement('textarea');
 			captionText.placeholder = 'Photo Caption';
+			captionText.addEventListener('keyup', e => {
+				if (e.target.value.length > 3) {
+					wpFrontendUploader.media[media.key].data.caption = e.target.value;
+				} else {
+					wpFrontendUploader.media[media.key].data.caption = null;
+				}
+				updateProgressBar();
+			});
 			mediaForm.appendChild(captionText);
 
 			// append wrappers to container div
@@ -107,8 +171,6 @@
 		// get the loader and hide it
 		let loader = mediaItem.querySelector(`[data-element="loader"]`);
 		loader.classList.add('hide');
-
-		console.log(loader)
 	}
 
 	// upload a single file
@@ -130,7 +192,8 @@
 			return response.json();
 		})
 		.then(upload => {
-			return updatePreview(upload, media.key);
+			updatePreview(upload, media.key);
+			updateProgressBar();
 		})
 		.catch(error => {
 			console.log(error)
@@ -154,16 +217,22 @@
 			let mediaFile = {
 				file: file,
 				upload: null,
-				key: idx
+				key: idx,
+				data: {
+					title: null,
+					credit: null,
+					caption: null,
+				}
 			}
 			wpFrontendUploader.media.push(mediaFile)
-		})
+		});
 
+		wpFrontendUploader.totalParts = wpFrontendUploader.media.length*3;
 		// set previews based off of files (not the uploads themselves)
 		setPreviews();
 
 		// upload the files
-		;([...wpFrontendUploader.media]).forEach(uploadFile)
+		;([...wpFrontendUploader.media]).forEach(uploadFile);
 	};
 
 	// make handleFiles public
