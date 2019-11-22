@@ -1,11 +1,15 @@
 const { __ } = wp.i18n; // Import __() from wp.i18n
 
 const {
-	InspectorControls
+	InspectorControls,
+	RichText
 } = wp.blockEditor;
+
+console.log(wp.blockEditor)
 
 const {
 	Panel, PanelBody, PanelRow,
+	TextareaControl,
 	SelectControl,
 	TextControl,
 	ToggleControl,
@@ -42,6 +46,16 @@ const UploaderEdit = withSelect((select, { attributes }) => {
 
 			<div className={className}>
 				<h2>Frontend Uploader</h2>
+
+				{ isSelected && (
+					<TextareaControl
+						label="Upload Instructions"
+						className="textarea"
+						value={attributes.uploadInstructions}
+						placeholder="Upload Instructions"
+						onChange={uploadInstructions => setAttributes({ uploadInstructions: uploadInstructions })}
+					/>
+				)}
 			</div>
 		</Fragment>
 	)

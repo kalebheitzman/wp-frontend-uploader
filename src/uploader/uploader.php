@@ -43,6 +43,7 @@ function wp_frontend_uploader_scripts() {
 			'attributes' => $attributes,
 			'media'      => [],
 			'progress'   => 0,
+			'success'    => false,
 		);
 
 		// localize needed vars to script
@@ -70,6 +71,9 @@ add_action( 'wp_enqueue_scripts', 'wp_frontend_uploader_scripts' );
  */
 function wp_frontend_uploader_block( $attributes ) {
 
+	// get attrs
+	$upload_instructions = $attributes['uploadInstructions'] ? $attributes['uploadInstructions'] : 'Drop files here or click to upload.';
+
 	$output = '';
 	ob_start(); ?>
 		<div id="wp-frontend-uploader-progress-bar">
@@ -85,14 +89,14 @@ function wp_frontend_uploader_block( $attributes ) {
 
 			</div>
 		</div>
-		<div class="<?php echo $attributes['className']; ?>">
+		<div class="wp-block-kh-wp-frontend-uploader">
 
 			<div id="wp-frontend-uploader">
 				<form>
 					<div class="icon">
 						<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
 					</div>
-					<p>Drop files here or click to upload.</p>
+					<p><?php echo $upload_instructions; ?></p>
 					<input
 						type="file"
 						id="fileElem"

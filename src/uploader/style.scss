@@ -125,7 +125,11 @@ body.admin-bar {
 		&.highlight,
 		&:hover {
 			border: 2px dashed #bbb;
-			background: #ccc;
+			background: #dadada;
+
+			i {
+				color: $blue;
+			}
 		}
 
 		form {
@@ -133,6 +137,8 @@ body.admin-bar {
 			width: 400px;
 			padding: 2rem 1rem;
 			box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+			border-radius: 3px;
+			color: #333;
 
 			.icon {
 				text-align: center;

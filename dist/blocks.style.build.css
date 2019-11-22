@@ -115,13 +115,17 @@ body.admin-bar #wp-frontend-uploader-progress-bar {
     cursor: pointer; }
     .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.highlight, .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader:hover {
       border: 2px dashed #bbb;
-      background: #ccc; }
+      background: #dadada; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.highlight i, .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader:hover i {
+        color: #466ca8; }
     .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form {
       background: #fff;
       width: 400px;
       padding: 2rem 1rem;
       -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      color: #333; }
       .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon {
         text-align: center; }
         .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon i {

@@ -18,14 +18,7 @@
  */
 .wp-block-kh-wp-frontend-uploader {
   background: #efefef;
-  padding: 1rem;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center;
-  height: 30vh; }
+  padding: 1rem; }
   .wp-block-kh-wp-frontend-uploader h2 {
     font-family: sans-serif;
     color: #aaa !important;
