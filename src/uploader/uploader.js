@@ -28,14 +28,14 @@
 	};
 
 	// edit area
-	let enableEditArea = () => {
-		// toggle the form and edit area
+	let setPreviews = () => {
+
+		// enable the edit area
 		dropArea.classList.add('hide')
 		editArea.classList.remove('hide')
 
 		// loop through files and add to the edit area
-		Array.from(wpFrontendUploader.files).forEach(file => {
-			console.log(file)
+		Array.from(wpFrontendUploader.media).forEach(media => {
 
 			// main container div
 			let mediaItem = document.createElement('div');
@@ -47,7 +47,10 @@
 
 			// image preview
 			let img = document.createElement('img');
-			img.src = window.URL.createObjectURL(file);
+			img.onload = () => {
+				img.classList.add('loaded')
+			}
+			img.src = window.URL.createObjectURL(media.file);
 			mediaWrapper.appendChild(img)
 
 			// mediaForm
@@ -81,10 +84,13 @@
 	}
 
 	// upload a single file
-	let uploadFile = (file) => {
-		let formData = new FormData()
-		formData.append('file', file)
+	let uploadFile = (media) => {
 
+		// set formdata
+		let formData = new FormData()
+		formData.append('file', media.file)
+
+		// upload the file
 		fetch(wpFrontendUploader.endpoint, {
 			method: 'POST',
 			body: formData,
@@ -95,8 +101,9 @@
 		.then(response => {
 			return response.json();
 		})
-		.then(item => {
-			console.log(item)
+		.then(upload => {
+			wpFrontendUploader.media[media.key].upload = upload
+			console.log(wpFrontendUploader.media[media.key])
 		})
 		.catch(error => {
 			console.log(error)
@@ -114,12 +121,20 @@
 
 	// handleFiles
 	let handleFiles = (files) => {
-		// save the files to mem
-		wpFrontendUploader.files = files;
-		// enable the edit area
-		enableEditArea();
+
+		;([...files]).forEach(( file, idx ) => {
+			let mediaFile = {
+				file: file,
+				upload: null,
+				key: idx
+			}
+			wpFrontendUploader.media.push(mediaFile)
+		})
+
+		setPreviews();
+
 		// upload the files
-		;([...files]).forEach(uploadFile)
+		;([...wpFrontendUploader.media]).forEach(uploadFile)
 	};
 
 	// make handleFiles public

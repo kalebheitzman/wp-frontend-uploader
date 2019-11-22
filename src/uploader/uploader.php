@@ -41,7 +41,7 @@ function wp_frontend_uploader_scripts() {
 			'endpoint'   => esc_url_raw( rest_url( '/wp/v2/media/' ) ),
 			'nonce'      => wp_create_nonce( 'wp_rest' ),
 			'attributes' => $attributes,
-			'files'      => []
+			'media'      => []
 		);
 
 		// localize needed vars to script

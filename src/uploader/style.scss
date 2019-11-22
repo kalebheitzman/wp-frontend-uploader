@@ -83,7 +83,19 @@
 				img {
 					max-height: 100%;
 					width: auto;
+					transition: opacity 0.3s;
+					opacity: 0;
+					filter: grayscale(100%);
 				}
+
+				img.loaded {
+					opacity: 1;
+				}
+
+				img.uploaded {
+					filter: grayscale(0);
+				}
+
 			}
 
 			// media form
