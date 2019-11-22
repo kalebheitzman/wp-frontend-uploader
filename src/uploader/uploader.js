@@ -40,6 +40,7 @@
 			// main container div
 			let mediaItem = document.createElement('div');
 			mediaItem.className = 'media-item';
+			mediaItem.setAttribute('data-key', media.key);
 
 			// image wrapper
 			let mediaWrapper = document.createElement('div');
@@ -47,11 +48,19 @@
 
 			// image preview
 			let img = document.createElement('img');
+			img.setAttribute('data-element', 'image');
 			img.onload = () => {
 				img.classList.add('loaded')
 			}
 			img.src = window.URL.createObjectURL(media.file);
 			mediaWrapper.appendChild(img)
+
+			// spinner
+			let spinner = document.createElement('div');
+			spinner.className = 'loader';
+			spinner.setAttribute( 'data-element', 'loader' );
+			spinner.innerHTML = '<div class="spinner"><div></div><div></div><div></div><div></div></div>';
+			mediaWrapper.appendChild(spinner);
 
 			// mediaForm
 			let mediaForm = document.createElement('div');
@@ -83,6 +92,25 @@
 		});
 	}
 
+	// update the preview
+	let updatePreview = (upload, key) => {
+		// set the upload to the media storage
+		wpFrontendUploader.media[key].upload = upload
+
+		// get the media item
+		let mediaItem = document.querySelector(`[data-key="${key}"]`);
+
+		// get the image and add uploaded class
+		let image = mediaItem.querySelector(`[data-element="image"]`);
+		image.classList.add('uploaded');
+
+		// get the loader and hide it
+		let loader = mediaItem.querySelector(`[data-element="loader"]`);
+		loader.classList.add('hide');
+
+		console.log(loader)
+	}
+
 	// upload a single file
 	let uploadFile = (media) => {
 
@@ -102,8 +130,7 @@
 			return response.json();
 		})
 		.then(upload => {
-			wpFrontendUploader.media[media.key].upload = upload
-			console.log(wpFrontendUploader.media[media.key])
+			return updatePreview(upload, media.key);
 		})
 		.catch(error => {
 			console.log(error)
@@ -122,6 +149,7 @@
 	// handleFiles
 	let handleFiles = (files) => {
 
+		// build a storage array for files and uploads identified by keys
 		;([...files]).forEach(( file, idx ) => {
 			let mediaFile = {
 				file: file,
@@ -131,6 +159,7 @@
 			wpFrontendUploader.media.push(mediaFile)
 		})
 
+		// set previews based off of files (not the uploads themselves)
 		setPreviews();
 
 		// upload the files
@@ -155,11 +184,5 @@
 
 	// detect when files are dropped
 	dropArea.addEventListener('drop', handleDrop, false);
-
-	// attach listeners
-	// dropArea.addEventListener('dragenter', handleFiles, false);
-	// dropArea.addEventListener('dragleave', handleFiles, false);
-	// dropArea.addEventListener('dragover', handleFiles, false);
-	// dropArea.addEventListener('drop', handleFiles, false);
 
 })(window);
