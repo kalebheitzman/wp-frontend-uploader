@@ -132,13 +132,10 @@ body.admin-bar #wp-frontend-uploader-progress-bar {
       -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       border-radius: 3px;
-      color: #333; }
-      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon {
-        text-align: center; }
-        .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon i {
-          font-size: 3rem; }
-      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form p {
-        text-align: center; }
+      color: #333;
+      text-align: center; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon i {
+        font-size: 3rem; }
       .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form input,
       .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form label {
         display: none; }
