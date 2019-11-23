@@ -4,28 +4,268 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+/*
+ * media query mixins
+ * Components is designed to be a mobile first framework. It's recommended
+ * to develop your mobile site first, and then work your way up in each
+ * component using the following sass mixins.
+ */
 /**
  * #.# Styles
  *
  * CSS for both Frontend+Backend.
  */
-.wp-block-kh-wp-frontend-uploader #wp-frontend-uploader {
-  background: #ddd;
-  margin: 2rem 0;
-  padding: 2rem;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center;
-  border-radius: 3px;
-  height: 55vh;
-  cursor: pointer; }
-  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form {
+/**
+ * Progress Bar
+ */
+body.admin-bar #wp-frontend-uploader-progress-bar {
+  top: 32px; }
+
+#wp-frontend-uploader-progress-bar {
+  padding: 1rem;
+  background: #ccc;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 100;
+  top: 0; }
+  #wp-frontend-uploader-progress-bar .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 160px;
+    grid-column-gap: 1rem; }
+    #wp-frontend-uploader-progress-bar .wrapper .progress-bar {
+      width: 100%;
+      background-color: #e0e0e0;
+      padding: 3px;
+      border-radius: 8px;
+      -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+              box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); }
+      #wp-frontend-uploader-progress-bar .wrapper .progress-bar .progress-bar-fill {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+            align-items: center;
+        height: 2rem;
+        background-color: #466ca8;
+        border-radius: 8px;
+        position: relative;
+        -webkit-transition: width 500ms ease-in-out;
+        -o-transition: width 500ms ease-in-out;
+        transition: width 500ms ease-in-out; }
+        #wp-frontend-uploader-progress-bar .wrapper .progress-bar .progress-bar-fill:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+          background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+          background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+          z-index: 1;
+          background-size: 50px 50px;
+          -webkit-animation: move 2s linear infinite;
+                  animation: move 2s linear infinite;
+          border-top-right-radius: 8px;
+          border-bottom-right-radius: 8px;
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          overflow: hidden; }
+        #wp-frontend-uploader-progress-bar .wrapper .progress-bar .progress-bar-fill .progress-status {
+          color: #fff;
+          padding: 0 1rem; }
+    #wp-frontend-uploader-progress-bar .wrapper button {
+      border: 0;
+      outline: 0;
+      background: #466ca8;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      -webkit-transition: all 85ms ease-out;
+      -o-transition: all 85ms ease-out;
+      transition: all 85ms ease-out; }
+      #wp-frontend-uploader-progress-bar .wrapper button:disabled {
+        background: #aaa;
+        color: #777;
+        cursor: auto; }
+      #wp-frontend-uploader-progress-bar .wrapper button:enabled:hover {
+        background: #375584; }
+      #wp-frontend-uploader-progress-bar .wrapper button.saved {
+        background: #00b976;
+        color: #fff; }
+
+/**
+ * Main Upload Area
+ */
+.wp-block-kh-wp-frontend-uploader {
+  /* uploader */
+  /* loader */ }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.hide,
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit.hide,
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-saved.hide {
+    display: none; }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader {
+    background: #e0e0e0;
+    margin: 2rem 0;
+    padding: 2rem;
+    border-radius: 3px;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    height: 55vh;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    cursor: pointer; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.highlight, .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader:hover {
+      border: 2px dashed #bbb;
+      background: #dadada; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.highlight i, .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader:hover i {
+        color: #466ca8; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form {
+      background: #fff;
+      width: 400px;
+      padding: 2rem 1rem;
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      color: #333; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon {
+        text-align: center; }
+        .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon i {
+          font-size: 3rem; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form p {
+        text-align: center; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form input,
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form label {
+        display: none; }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 2rem 0; }
+    @media (min-width: 600px) {
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 2rem; } }
+    @media (min-width: 900px) {
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit {
+        grid-template-columns: 1fr 1fr 1fr; } }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-wrapper {
+      position: relative;
+      height: 220px;
+      width: 100%;
+      background: #ccc;
+      padding: 1rem;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-wrapper img {
+        max-height: 100%;
+        width: auto;
+        -webkit-transition: opacity 0.3s;
+        -o-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+        opacity: 0;
+        -webkit-filter: grayscale(100%);
+                filter: grayscale(100%); }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-wrapper img.loaded {
+        opacity: 1; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-wrapper img.uploaded {
+        -webkit-filter: grayscale(0);
+                filter: grayscale(0); }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form {
+      padding: 1rem;
+      background: #fff;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form textarea,
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form input[type="text"] {
+        width: 100%;
+        padding: 0.5rem;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        border: 1px solid #ccc;
+        background: #fff; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form textarea {
+        height: 100px; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form input[type="text"] {
+        margin-bottom: 0.5rem; }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-saved {
     background: #fff;
-    width: 400px;
-    padding: 2rem 1rem;
-    text-align: center; }
-    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form i {
-      font-size: 3rem; }
+    margin: 2rem 0;
+    padding: 2rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-saved h2 {
+      margin: 0; }
+  .wp-block-kh-wp-frontend-uploader .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    opacity: 1;
+    -webkit-transition: opacity 85ms ease-out;
+    -o-transition: opacity 85ms ease-out;
+    transition: opacity 85ms ease-out; }
+    .wp-block-kh-wp-frontend-uploader .loader.hide {
+      opacity: 0; }
+  .wp-block-kh-wp-frontend-uploader .spinner {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px; }
+  .wp-block-kh-wp-frontend-uploader .spinner div {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    -webkit-animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: rgba(255, 255, 255, 0.8) transparent transparent transparent; }
+  .wp-block-kh-wp-frontend-uploader .spinner div:nth-child(1) {
+    -webkit-animation-delay: -0.45s;
+            animation-delay: -0.45s; }
+  .wp-block-kh-wp-frontend-uploader .spinner div:nth-child(2) {
+    -webkit-animation-delay: -0.3s;
+            animation-delay: -0.3s; }
+  .wp-block-kh-wp-frontend-uploader .spinner div:nth-child(3) {
+    -webkit-animation-delay: -0.15s;
+            animation-delay: -0.15s; }
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }

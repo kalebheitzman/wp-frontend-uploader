@@ -37,15 +37,20 @@ function wp_frontend_uploader_scripts() {
 
 		// get attributes to localize.
 		$attributes = $block['attrs'];
-		$js_attributes = array(
+		$js_vars = array(
+			'endpoint'   => esc_url_raw( rest_url( '/wp/v2/media/' ) ),
+			'nonce'      => wp_create_nonce( 'wp_rest' ),
 			'attributes' => $attributes,
+			'media'      => [],
+			'progress'   => 0,
+			'success'    => false,
 		);
 
 		// localize needed vars to script
 		wp_localize_script(
 			'wp-frontend-uploader-js',
 			'wpFrontendUploader',
-			$js_attributes
+			$js_vars
 		);
 
 		// enqueue the media grid script
@@ -66,14 +71,33 @@ add_action( 'wp_enqueue_scripts', 'wp_frontend_uploader_scripts' );
  */
 function wp_frontend_uploader_block( $attributes ) {
 
+	// get attrs
+	$upload_instructions = $attributes['upload_instructions'] ? $attributes['upload_instructions'] : 'Drop files here or click to upload.';
+	$saved_instructions = $attributes['saved_instructions'] ? $attributes['saved_instructions'] : 'Your media has been uploaded and is awaiting moderator approval.';
+
 	$output = '';
 	ob_start(); ?>
-		<div class="<?php echo $attributes['className']; ?>">
-			<div id="wp-frontend-uploader">
+		<div id="wp-frontend-uploader-progress-bar">
+			<div class="wrapper">
 
+				<div class="progress-bar">
+					<div class="progress-bar-fill" data-element="progress-bar" style="width: 0%;">
+						<div class="progress-status" data-element="progress-status">0%</div>
+					</div>
+				</div>
+
+				<button disabled data-element="submit-button">Submit</button>
+
+			</div>
+		</div>
+		<div class="wp-block-kh-wp-frontend-uploader">
+
+			<div id="wp-frontend-uploader">
 				<form>
-					<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-					<p>Drop files here or click to upload.</p>
+					<div class="icon">
+						<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+					</div>
+					<div><?php echo $upload_instructions; ?></div>
 					<input
 						type="file"
 						id="fileElem"
@@ -83,8 +107,16 @@ function wp_frontend_uploader_block( $attributes ) {
 					/>
 					<label class="button" for="fileElem">Select some files</label>
 				</form>
+			</div><!--#wp-frontend-uploader-->
 
-			</div>
+			<div id="wp-frontend-uploader-edit" class="hide">
+
+			</div><!--#wp-frontend-uploader-edit-->
+
+			<div id="wp-frontend-uploader-saved" class="hide">
+				<?php echo $saved_instructions; ?>
+			</div><!--#wp-fronten-uploader-saved-->
+
 		</div>
 	<?php
 
@@ -103,7 +135,17 @@ function register_wp_frontend_uploader_block() {
 	register_block_type(
 		'kh/wp-frontend-uploader',
 		array(
-			'render_callback' => 'wp_frontend_uploader_block'
+			'render_callback' => 'wp_frontend_uploader_block',
+			'attributes'      => [
+				'upload_instructions' => [
+					'type' => 'string',
+					'default' => 'Drop files here or click to upload.'
+				],
+				'saved_instructions' => [
+					'type' => 'string',
+					'drault' => 'Your media has been uploaded and is awaiting moderator approval.'
+				]
+			]
 		)
 	);
 }

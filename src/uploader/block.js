@@ -40,6 +40,25 @@ registerBlockType( 'kh/wp-frontend-uploader', {
 	],
 
 	/**
+	 * Attributes
+	 */
+	attributes: {
+
+		upload_instructions: {
+			type: 'string',
+			default: 'Drop files here or click to upload.'
+		},
+
+		saved_instructions: {
+			type: 'string',
+			default: 'Your media has been uploaded and is awaiting moderator approval.'
+		},
+
+		className: null
+
+	},
+
+	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
 	 *
