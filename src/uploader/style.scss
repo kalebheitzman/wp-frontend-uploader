@@ -22,7 +22,7 @@ body.admin-bar {
 
 	.wrapper {
 		display: grid;
-		grid-template-columns: 1fr 200px;
+		grid-template-columns: 1fr 160px;
 		grid-column-gap: 1rem;
 
 		.progress-bar {
@@ -80,6 +80,7 @@ body.admin-bar {
 			color: #fff;
 			border-radius: 8px;
 			cursor: pointer;
+			transition: all 85ms ease-out;
 
 			&:disabled {
 				background: #aaa;
@@ -89,6 +90,11 @@ body.admin-bar {
 
 			&:enabled:hover {
 				background: darken($blue, 10%);
+			}
+
+			&.saved {
+				background: #00b976;
+				color: #fff;
 			}
 		}
 
@@ -102,7 +108,8 @@ body.admin-bar {
 
 	/* uploader */
 	#wp-frontend-uploader,
-	#wp-frontend-uploader-edit {
+	#wp-frontend-uploader-edit,
+	#wp-frontend-uploader-saved {
 
 		&.hide {
 			display: none;
@@ -232,6 +239,17 @@ body.admin-bar {
 					margin-bottom: 0.5rem;
 				}
 			}
+		}
+	}
+
+	#wp-frontend-uploader-saved {
+		background: #fff;
+		margin: 2rem 0;
+		padding: 2rem;
+		box-sizing: border-box;
+
+		h2 {
+			margin: 0;
 		}
 	}
 

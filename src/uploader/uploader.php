@@ -72,7 +72,8 @@ add_action( 'wp_enqueue_scripts', 'wp_frontend_uploader_scripts' );
 function wp_frontend_uploader_block( $attributes ) {
 
 	// get attrs
-	$upload_instructions = $attributes['uploadInstructions'] ? $attributes['uploadInstructions'] : 'Drop files here or click to upload.';
+	$upload_instructions = $attributes['upload_instructions'] ? $attributes['upload_instructions'] : 'Drop files here or click to upload.';
+	$saved_instructions = $attributes['saved_instructions'] ? $attributes['saved_instructions'] : 'Your media has been uploaded and is awaiting moderator approval.';
 
 	$output = '';
 	ob_start(); ?>
@@ -85,7 +86,7 @@ function wp_frontend_uploader_block( $attributes ) {
 					</div>
 				</div>
 
-				<button disabled data-element="submit-button">Upload</button>
+				<button disabled data-element="submit-button">Submit</button>
 
 			</div>
 		</div>
@@ -96,7 +97,7 @@ function wp_frontend_uploader_block( $attributes ) {
 					<div class="icon">
 						<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
 					</div>
-					<p><?php echo $upload_instructions; ?></p>
+					<div><?php echo $upload_instructions; ?></div>
 					<input
 						type="file"
 						id="fileElem"
@@ -111,6 +112,10 @@ function wp_frontend_uploader_block( $attributes ) {
 			<div id="wp-frontend-uploader-edit" class="hide">
 
 			</div><!--#wp-frontend-uploader-edit-->
+
+			<div id="wp-frontend-uploader-saved" class="hide">
+				<?php echo $saved_instructions; ?>
+			</div><!--#wp-fronten-uploader-saved-->
 
 		</div>
 	<?php
@@ -130,7 +135,17 @@ function register_wp_frontend_uploader_block() {
 	register_block_type(
 		'kh/wp-frontend-uploader',
 		array(
-			'render_callback' => 'wp_frontend_uploader_block'
+			'render_callback' => 'wp_frontend_uploader_block',
+			'attributes'      => [
+				'upload_instructions' => [
+					'type' => 'string',
+					'default' => 'Drop files here or click to upload.'
+				],
+				'saved_instructions' => [
+					'type' => 'string',
+					'drault' => 'Your media has been uploaded and is awaiting moderator approval.'
+				]
+			]
 		)
 	);
 }

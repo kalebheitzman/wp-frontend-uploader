@@ -30,7 +30,7 @@ body.admin-bar #wp-frontend-uploader-progress-bar {
   top: 0; }
   #wp-frontend-uploader-progress-bar .wrapper {
     display: grid;
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: 1fr 160px;
     grid-column-gap: 1rem; }
     #wp-frontend-uploader-progress-bar .wrapper .progress-bar {
       width: 100%;
@@ -79,13 +79,19 @@ body.admin-bar #wp-frontend-uploader-progress-bar {
       background: #466ca8;
       color: #fff;
       border-radius: 8px;
-      cursor: pointer; }
+      cursor: pointer;
+      -webkit-transition: all 85ms ease-out;
+      -o-transition: all 85ms ease-out;
+      transition: all 85ms ease-out; }
       #wp-frontend-uploader-progress-bar .wrapper button:disabled {
         background: #aaa;
         color: #777;
         cursor: auto; }
       #wp-frontend-uploader-progress-bar .wrapper button:enabled:hover {
         background: #375584; }
+      #wp-frontend-uploader-progress-bar .wrapper button.saved {
+        background: #00b976;
+        color: #fff; }
 
 /**
  * Main Upload Area
@@ -94,7 +100,8 @@ body.admin-bar #wp-frontend-uploader-progress-bar {
   /* uploader */
   /* loader */ }
   .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader.hide,
-  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit.hide {
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit.hide,
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-saved.hide {
     display: none; }
   .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader {
     background: #e0e0e0;
@@ -193,6 +200,14 @@ body.admin-bar #wp-frontend-uploader-progress-bar {
         height: 100px; }
       .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-edit .media-item .media-form input[type="text"] {
         margin-bottom: 0.5rem; }
+  .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-saved {
+    background: #fff;
+    margin: 2rem 0;
+    padding: 2rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader-saved h2 {
+      margin: 0; }
   .wp-block-kh-wp-frontend-uploader .loader {
     position: absolute;
     top: 0;

@@ -10,6 +10,7 @@
 	// get the drop area
 	let dropArea = document.getElementById('wp-frontend-uploader');
 	let editArea = document.getElementById('wp-frontend-uploader-edit');
+	let savedArea = document.getElementById('wp-frontend-uploader-saved');
 	let progressBar = document.querySelector(`[data-element="progress-bar"]`);
 	let progressStatus = document.querySelector(`[data-element="progress-status"]`);
 	let submitButton = document.querySelector(`[data-element="submit-button"]`);
@@ -198,51 +199,69 @@
 	// updateMediaItem
 	let updateMediaItem = (media) => {
 
-		// build the endpoint
-		let id = media.upload.id
-		let endpoint = `${wpFrontendUploader.endpoint}${id}`;
+		return new Promise((resolve, reject) => {
+			// build the endpoint
+			let id = media.upload.id
+			let endpoint = `${wpFrontendUploader.endpoint}${id}`;
 
-		// build the data
-		let postData = {
-			'title': media.data.title,
-			'alt_text': media.data.title,
-			'caption': media.data.caption,
-			'fields': {
-			  'media_contributor': media.data.credit,
-			  'media_downloads_count': 0,
-			  'media_favorites_count': 0,
-			  'media_views_count': 0
+			// build the data
+			let postData = {
+				'title': media.data.title,
+				'alt_text': media.data.title,
+				'caption': media.data.caption,
+				'fields': {
+				'media_contributor': media.data.credit,
+				'media_downloads_count': 0,
+				'media_favorites_count': 0,
+				'media_views_count': 0
+				}
 			}
-		}
 
-		// update the media
-		fetch(endpoint, {
-			method: 'POST',
-			body: JSON.stringify(postData),
-			headers: new Headers({
-				'X-WP-Nonce': wpFrontendUploader.nonce,
-				'Content-Type': 'application/json',
-        		'accept': 'application/json',
+			// update the media
+			fetch(endpoint, {
+				method: 'POST',
+				body: JSON.stringify(postData),
+				headers: new Headers({
+					'X-WP-Nonce': wpFrontendUploader.nonce,
+					'Content-Type': 'application/json',
+					'accept': 'application/json',
+				})
+			})
+			.then(response => {
+				return response.json();
+			})
+			.then(media => {
+				resolve(media)
+			})
+			.catch(error => {
+				reject(error)
 			})
 		})
-		.then(response => {
-			console.log(response)
-			return response.json();
-		})
-		.then(media => {
-			console.log(media)
-		})
-		.catch(error => {
-			console.log(error)
-		})
-
 	}
 
 	// process data
 	let processMediaItems = () => {
+
+		// disable submit button
+		submitButton.disabled = true;
+		submitButton.innerHTML = 'Updating...';
+
+		// build a promise list
+		let promises = [];
 		;([...wpFrontendUploader.media]).forEach(media => {
-			updateMediaItem(media)
+			promises.push(updateMediaItem(media))
 		});
+
+		// run promises
+		Promise.all(promises).then(results => {
+
+			// enable submit button
+			submitButton.classList.add('saved');
+			submitButton.innerHTML = 'Saved';
+
+			editArea.classList.add('hide');
+			savedArea.classList.remove('hide');
+		})
 	}
 	submitButton.addEventListener('click', processMediaItems);
 

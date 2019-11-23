@@ -44,9 +44,14 @@ registerBlockType( 'kh/wp-frontend-uploader', {
 	 */
 	attributes: {
 
-		uploadInstructions: {
-			type: 'text',
+		upload_instructions: {
+			type: 'string',
 			default: 'Drop files here or click to upload.'
+		},
+
+		saved_instructions: {
+			type: 'string',
+			default: 'Your media has been uploaded and is awaiting moderator approval.'
 		},
 
 		className: null
