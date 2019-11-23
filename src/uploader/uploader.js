@@ -14,12 +14,6 @@
 	let progressStatus = document.querySelector(`[data-element="progress-status"]`);
 	let submitButton = document.querySelector(`[data-element="submit-button"]`);
 
-	// process data
-	let processMediaItems = () => {
-		console.log(wpFrontendUploader.media)
-	}
-	submitButton.addEventListener('click', processMediaItems);
-
 	// prevent defaults on drag and drop
 	let preventDefaults = (e) => {
 		e.preventDefault()
@@ -200,6 +194,58 @@
 		})
 
 	};
+
+	// updateMediaItem
+	let updateMediaItem = (media) => {
+
+		// build the endpoint
+		let id = media.upload.id
+		let endpoint = `${wpFrontendUploader.endpoint}${id}`;
+
+		// build the data
+		let postData = {
+			'title': media.data.title,
+			'alt_text': media.data.title,
+			'caption': media.data.caption,
+			'fields': {
+			  'media_contributor': media.data.credit,
+			  'media_downloads_count': 0,
+			  'media_favorites_count': 0,
+			  'media_views_count': 0
+			}
+		}
+
+		// update the media
+		fetch(endpoint, {
+			method: 'POST',
+			body: JSON.stringify(postData),
+			headers: new Headers({
+				'X-WP-Nonce': wpFrontendUploader.nonce,
+				'Content-Type': 'application/json',
+        		'accept': 'application/json',
+			})
+		})
+		.then(response => {
+			console.log(response)
+			return response.json();
+		})
+		.then(media => {
+			console.log(media)
+		})
+		.catch(error => {
+			console.log(error)
+		})
+
+	}
+
+	// process data
+	let processMediaItems = () => {
+		;([...wpFrontendUploader.media]).forEach(media => {
+			updateMediaItem(media)
+		});
+	}
+	submitButton.addEventListener('click', processMediaItems);
+
 
 	// handle dropped files
 	let handleDrop = (e) => {
