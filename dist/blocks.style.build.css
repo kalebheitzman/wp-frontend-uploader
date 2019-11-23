@@ -134,8 +134,10 @@ body.admin-bar #wp-frontend-uploader-progress-bar {
       border-radius: 3px;
       color: #333;
       text-align: center; }
-      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon i {
-        font-size: 3rem; }
+      .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon {
+        margin-bottom: 0.5rem; }
+        .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form .icon i {
+          font-size: 3rem; }
       .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form input,
       .wp-block-kh-wp-frontend-uploader #wp-frontend-uploader form label {
         display: none; }
