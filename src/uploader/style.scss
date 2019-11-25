@@ -1,0 +1,305 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+/**
+ * Progress Bar
+ */
+body.admin-bar {
+
+	#wp-frontend-uploader-progress-bar {
+		top: 32px;
+	}
+}
+#wp-frontend-uploader-progress-bar {
+	padding: 1rem;
+	background: #ccc;
+	position: sticky;
+	z-index: 100;
+	top: 0;
+
+	.wrapper {
+		display: grid;
+		grid-template-columns: 1fr 160px;
+		grid-column-gap: 1rem;
+
+		.progress-bar {
+			width: 100%;
+			background-color: #e0e0e0;
+			padding: 3px;
+			border-radius: 8px;
+			box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+
+			.progress-bar-fill {
+				display: flex;
+				align-items: center;
+				height: 2rem;
+				background-color: $blue;
+				border-radius: 8px;
+				position: relative;
+
+				transition: width 500ms ease-in-out;
+
+				&:after {
+					content: "";
+					position: absolute;
+					top: 0; left: 0; bottom: 0; right: 0;
+					background-image: linear-gradient(
+						-45deg,
+						rgba(255, 255, 255, .2) 25%,
+						transparent 25%,
+						transparent 50%,
+						rgba(255, 255, 255, .2) 50%,
+						rgba(255, 255, 255, .2) 75%,
+						transparent 75%,
+						transparent
+					);
+					z-index: 1;
+					background-size: 50px 50px;
+					animation: move 2s linear infinite;
+					border-top-right-radius: 8px;
+					border-bottom-right-radius: 8px;
+					border-top-left-radius: 8px;
+					border-bottom-left-radius: 8px;
+					overflow: hidden;
+				}
+
+				.progress-status {
+					color: #fff;
+					padding: 0 1rem;
+				}
+			}
+		}
+
+		button {
+			border: 0;
+			outline: 0;
+			background: $blue;
+			color: #fff;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 85ms ease-out;
+
+			&:disabled {
+				background: #aaa;
+				color: #777;
+				cursor: auto;
+			}
+
+			&:enabled:hover {
+				background: darken($blue, 10%);
+			}
+
+			&.saved {
+				background: #00b976;
+				color: #fff;
+			}
+		}
+
+	}
+}
+
+/**
+ * Main Upload Area
+ */
+.wp-block-kh-wp-frontend-uploader  {
+
+	/* uploader */
+	#wp-frontend-uploader,
+	#wp-frontend-uploader-edit,
+	#wp-frontend-uploader-saved {
+
+		&.hide {
+			display: none;
+		}
+	}
+
+	#wp-frontend-uploader {
+		background: #e0e0e0;
+		margin: 2rem 0;
+		padding: 2rem;
+		border-radius: 3px;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 55vh;
+		box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+		cursor: pointer;
+
+		&.highlight,
+		&:hover {
+			border: 2px dashed #bbb;
+			background: #dadada;
+
+			i {
+				color: $blue;
+			}
+		}
+
+		form {
+			background: #fff;
+			width: 400px;
+			padding: 2rem 1rem;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+			border-radius: 3px;
+			color: #333;
+			text-align: center;
+
+			.icon {
+
+				i {
+					font-size: 3rem;
+				}
+				margin-bottom: 0.5rem;
+			}
+
+			input,
+			label {
+				display: none;
+			}
+		}
+	}
+
+	#wp-frontend-uploader-edit {
+		display: grid;
+		grid-template-columns: 1fr;
+		padding: 2rem 0;
+
+		@include tablet-up {
+			grid-template-columns: 1fr 1fr;
+			grid-gap: 2rem;
+		}
+
+		@include tablet-side {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+
+		// a single media item
+		.media-item {
+
+			// wrap the image
+			.media-wrapper {
+				position: relative;
+				height: 220px;
+				width: 100%;
+				background: #ccc;
+				padding: 1rem;
+				box-sizing: border-box;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-top-left-radius: 3px;
+				border-top-right-radius: 3px;
+
+				img {
+					max-height: 100%;
+					width: auto;
+					transition: opacity 0.3s;
+					opacity: 0;
+					filter: grayscale(100%);
+				}
+
+				img.loaded {
+					opacity: 1;
+				}
+
+				img.uploaded {
+					filter: grayscale(0);
+				}
+
+			}
+
+			// media form
+			.media-form {
+				padding: 1rem;
+				background: #fff;
+				border-bottom-left-radius: 3px;
+				border-bottom-right-radius: 3px;
+
+				textarea,
+				input[type="text"] {
+					width: 100%;
+					padding: 0.5rem;
+					box-sizing: border-box;
+					border: 1px solid #ccc;
+					background: #fff;
+				}
+
+				textarea {
+					height: 100px;
+				}
+
+				input[type="text"] {
+					margin-bottom: 0.5rem;
+				}
+			}
+		}
+	}
+
+	#wp-frontend-uploader-saved {
+		background: #fff;
+		margin: 2rem 0;
+		padding: 2rem;
+		box-sizing: border-box;
+
+		h2 {
+			margin: 0;
+		}
+	}
+
+	/* loader */
+	.loader {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 1;
+		transition: opacity 85ms ease-out;
+
+		&.hide {
+			opacity: 0;
+		}
+	}
+	.spinner {
+		display: inline-block;
+		position: relative;
+		width: 80px;
+		height: 80px;
+	}
+	.spinner div {
+		box-sizing: border-box;
+		display: block;
+		position: absolute;
+		width: 64px;
+		height: 64px;
+		margin: 8px;
+		border: 8px solid rgba(255,255,255,0.8);
+		border-radius: 50%;
+		animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+		border-color: rgba(255,255,255,0.8) transparent transparent transparent;
+	}
+	.spinner div:nth-child(1) {
+		animation-delay: -0.45s;
+	}
+	.spinner div:nth-child(2) {
+		animation-delay: -0.3s;
+	}
+	.spinner div:nth-child(3) {
+		animation-delay: -0.15s;
+	}
+	@keyframes spinner {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+}

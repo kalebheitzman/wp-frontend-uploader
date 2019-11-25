@@ -1,0 +1,30 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/*
+ * media query mixins
+ * Components is designed to be a mobile first framework. It's recommended
+ * to develop your mobile site first, and then work your way up in each
+ * component using the following sass mixins.
+ */
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-kh-wp-frontend-uploader {
+  background: #efefef;
+  padding: 1rem; }
+  .wp-block-kh-wp-frontend-uploader h2 {
+    font-family: sans-serif;
+    color: #aaa !important;
+    text-transform: uppercase;
+    font-size: 1.25rem !important; }
+
+.wp-frontend-uploader-settings h2 {
+  font-family: sans-serif;
+  font-size: 1.15rem !important; }
