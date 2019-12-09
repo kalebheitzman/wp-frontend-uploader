@@ -319,4 +319,10 @@
 	// detect when files are dropped
 	dropArea.addEventListener('drop', handleDrop, false);
 
+	// detect when droparea is clicked
+	dropArea.addEventListener('click', (e) => {
+		let fileField = dropArea.querySelector('form input[type="file"]');
+		fileField.click();
+	}, false)
+
 })(window);
